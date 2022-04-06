@@ -1,7 +1,15 @@
-const express = require('express');
+const customExpress = require('./config/customExpressConfig');
+const conexao = require('./infraetrutura/conexaoInfraestrutura');
 
-const app = express();
 
-app.listen(3000, ()=> console.log('servidor rodando na porta 3000'));
+conexao.connect((erro)=>{
+    if(erro){
+        console.log(erro)
+    }else{
+        console.log('conectado com o banco de dados');
+        const app = customExpress();
+        app.listen(3000, ()=> console.log('servidor rodando na porta 3000'));
+    }
+})
 
-app.get('/atendimento', (req, res) => {res.send('topzeira rota de atendimentos')})
+

@@ -47,5 +47,47 @@ class AtendimentoModels{
             })
         }
     }
+    buscaPorId(id, res){
+        const sql = `SELECT * FROM Atendimentos WHERE id=${id}`
+
+        conexao.query(sql, (erro, resultados) => {
+            const atendimento = resultados[0]
+            if(erro){
+                res.status(400).json(erro)
+            }else{
+                res.status(200).json(atendimento)
+            }
+        })
+    }
+
+    lista(res){
+        const sql = 'SELECT * FROM Atendimentos'
+
+        conexao.query(sql, (erro, resultados) => {
+            if(erro){
+                res.status(400).json(erro)
+            }else{
+                res.status(200).json(resultados)
+            }
+        })
+    }
+
+    altera(id, valores, res){
+        if(valores.data){
+            valores.data = moment(valores.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:S');
+        }
+
+        const sql = 'UPDATE Atendimentos SET ? WHERE id=?'
+
+        conexao.query(sql, [valores, id], (erro, resultados) => {
+            if(erro){
+                res.status(400).json(erro)
+            }else{
+                res.status(200).json(resultados)
+            }
+        })
+    }
+
+
 }
 module.exports = new AtendimentoModels

@@ -1,4 +1,4 @@
-class Tabelas{
+class TabelasInfraestrutura{
     init(conexao){
         this.conexao = conexao;
         this.criarAtendimentos();
@@ -17,4 +17,4 @@ class Tabelas{
         })
     }
 }
-module.exports = new Tabelas
+module.exports = new TabelasInfraestrutura

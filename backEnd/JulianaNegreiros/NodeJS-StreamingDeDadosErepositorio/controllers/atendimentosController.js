@@ -3,7 +3,9 @@ const AtendimentoModels = require('../models/AtendimetoModels');
 
 module.exports = app => {    
     app.get('/atendimentos', (req, res) => {
-        AtendimentoModels.lista(res)
+        AtendimentoModels.lista()
+            .then(resultados=> res.status(200).json(resultados))
+            .catch(erros=> res.status(400).json(erros))
     });
 
     app.get('/atendimentos/:id', (req, res) =>{
@@ -13,9 +15,14 @@ module.exports = app => {
 
 
     app.post('/atendimentos', (req, res) => {
-        const atendimento = req.body;
-        console.log('estou aqui 1')
-        AtendimentoModels.adiciona(atendimento, res);
+        const atendimento = req.body;       
+        AtendimentoModels.adiciona(atendimento)
+            .then( atendimentoCadastrado => {
+                res.status(201).json(atendimentoCadastrado)
+            })
+            .catch(erros =>{
+                res.status(400).json(erros)
+            })
         
        
     });

@@ -1,26 +1,24 @@
-const conexao = require('../infraetrutura/database/conexaoInfraestrutura');
+//const conexao = require('../infraetrutura/database/conexaoInfraestrutura');
+const petsRepositorio = require('../repositorios/PetsRepositorio')
 const uploadDeArquivo = require('../infraetrutura/arquivos/uploadDeArquivos');
 class PetsModel{
 
-    adiciona(pet, res){
-        const sql = 'INSERT INTO Pets SET ?';
+    adiciona(pet){        
 
         uploadDeArquivo(pet.imagem, pet.nome, (erroIMG, novoCaminho)=>{
             if(erroIMG){
-                res.status(400).json({erroIMG})
-            }else{
+                console.log("++++++++++++++++++++++++++++++++++++++++++if")
+                return petsRepositorio.adiciona(novoPet)
+                console.log('deu erro na imagem')
+            }else{                
                 const novoPet = { nome: pet.nome, imagem: novoCaminho}      
-                conexao.query(sql, novoPet, erro =>{
-                    if(erro){
-                        res.status(400).json(erro);
-                    }else{
-                        res.status(200).json(novoPet)
-                    }
-                })
-
+                console.log("++++++++++++++++++++++++++++++++++++++++++else")
+                return petsRepositorio.adiciona(novoPet)
             }
 
         })
+        console.log("++++++++++++++++++++++++++++++++++++++++++direto")
+        return petsRepositorio.adiciona(pet)
         
     }
     

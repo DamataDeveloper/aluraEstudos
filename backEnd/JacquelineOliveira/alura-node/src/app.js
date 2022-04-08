@@ -1,6 +1,8 @@
 import express from "express";
 
 const app = express();
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
 const livros = [
     {
@@ -16,6 +18,10 @@ app.get('/', (req, res)=>{
 })
 app.get('/livros', (req, res)=>{
     res.status(200).json(livros)
+})
+app.post('/livros',(req, res)=>{
+    livros.push(req.body)
+    res.status(201).json(livros)
 })
 
 

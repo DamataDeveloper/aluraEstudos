@@ -12,9 +12,7 @@ class AtendimentoModels{
             const {nome} = campo
             const parametro = parametros[nome]
             return !campo.valido(parametro)
-        })
-
-        
+        })       
         
         this.validacoes = [
             {

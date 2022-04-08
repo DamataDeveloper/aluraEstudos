@@ -3,6 +3,8 @@ class PetsRepositorio{
     
     adiciona(pet){
         const sql = 'INSERT INTO Pets SET ?';
+         
+       
         return query(sql, pet);
     }
 }

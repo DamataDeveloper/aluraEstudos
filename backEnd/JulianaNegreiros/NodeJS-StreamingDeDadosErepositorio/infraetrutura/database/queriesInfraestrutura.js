@@ -8,7 +8,7 @@ const execuraQuery = (sql, parametros = '')=>{
             if(erros){    
                 reject(erros)
             }else{
-                resolve(resultados)
+                resolve(parametros)
             }    
         })    
     })     

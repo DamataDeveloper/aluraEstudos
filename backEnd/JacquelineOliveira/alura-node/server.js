@@ -1,9 +1,15 @@
 const http = require("http");
 const port = 3000;
+const rotas ={
+    '/': 'Curso de Node',
+    '/livros': 'Entrei na pag de livros',
+    '/autores': 'Listagem de autores',
+    '/sobre': 'info sobre o projeto'
+}
 
 const server = http.createServer((req, res) =>{
     res.writeHead(200, {'Content-Type': 'text/plain'})
-    res.end('CUrso de node')
+    res.end(rotas[req.url])
 })
 
-server.listen(port, ()=>console.log(`servidor escutando na porta ${port}`))
+server.listen(port, ()=>console.log(`servidor escutando na porta http://localhost:${port}`))

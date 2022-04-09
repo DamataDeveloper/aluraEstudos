@@ -3,9 +3,8 @@ import LivroController from "../controller/livrosController.js";
 
 const router = express.Router()
 
-console.log("estou nas routas")
-router.get('/livros', LivroController.listarLivros)
-console.log(LivroController.listarLivros)
-
+router
+  .get('/livros', LivroController.listarLivros)
+  .post('/livros', LivroController.cadastrarLivro)
 
 export default router

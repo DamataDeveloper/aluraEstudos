@@ -34,11 +34,7 @@ app.get('/livros/:id',(req, res)=>{
     res.status(200).json(livros[index])
 })
 
-app.put('/livros/:id',(req, res)=>{
-    let index =  buscaLivro(req.params.id);
-    livros[index].titulo = req.body.titulo;
-    res.status(200).json(livros[index])
-})
+
 app.delete('/livros/:id',(req, res)=>{
     let {id} = req.params; //atribuicao via disestruturacao
     let index =  buscaLivro(id);
@@ -47,10 +43,7 @@ app.delete('/livros/:id',(req, res)=>{
 })
 
 
-function buscaLivro(id){
-    
-    return livros.findIndex(livro => livro.id == id)
-}
+
 
 
 export default app

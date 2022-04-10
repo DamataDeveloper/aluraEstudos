@@ -1,3 +1,0 @@
-{
-    messagen: "comecando projeto"
-}

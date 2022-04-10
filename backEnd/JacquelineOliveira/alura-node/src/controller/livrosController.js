@@ -56,7 +56,6 @@ class LivroController {
         })
 
     }
-
     static listaLivroPorEditora = (req,res)=>{
         const editora = req.query.editora
 

@@ -61,7 +61,14 @@ class LivroController {
         const editora = req.query.editora
 
         livros.find({'editora': editora}, {}, (err, livros)=>{
-            res.status(200).send(livros);
+            if(err){
+                console.log("teste nova rota nao deu certo")
+                res.status(500).send({menssage: err.message});    
+            }else{
+                console.log("teste nova rota")
+                res.status(200).send(livros);
+            }
+            
         })
     }
 

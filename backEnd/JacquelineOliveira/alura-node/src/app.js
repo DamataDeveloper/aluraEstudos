@@ -1,6 +1,5 @@
 import express from "express";
 import db from "./config/dbConnect.js";
-import livros from "./model/Livro.js";
 import routes from "./routes/index.js";
 
 
@@ -11,6 +10,6 @@ db.once("open", () => {
 const app = express();
 
 app.use(express.json());
-//app.use(express.urlencoded({extended:true}))
+
 routes(app);
 export default app

@@ -1,4 +1,3 @@
-/*
 const path = require('path');
 
 module.exports = {
@@ -7,13 +6,5 @@ module.exports = {
   'seeders-path': path.resolve('./api/seeders'),
   'migrations-path': path.resolve('./api/migrations')
 };
-*/
 
-import path from "path";
 
-export default {
-  'config': path.resolve('./api/config', 'config.json'),
-  'models-path': path.resolve('./api/models'),
-  'seeders-path': path.resolve('./api/seeders'),
-  'migrations-path': path.resolve('./api/migrations')
-};

@@ -1,14 +1,14 @@
-import express from "express";
+const express = require('express');
+const routers = require('./routes/index')
+
 
 const app = express();
+
 const porta = 3000;
-app.use(express.json());
 
 
-
-
-app.get('/teste', (req, res)=>{
-    res.status(200).send({menssagem: "boas vindas a API"});
-})
+routers(app)
 
 app.listen(porta,()=>console.log(`servidor rodando na porta ${porta}`));
+
+//module.exports = app

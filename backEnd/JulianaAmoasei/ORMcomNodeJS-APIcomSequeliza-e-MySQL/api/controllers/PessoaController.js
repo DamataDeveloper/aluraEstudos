@@ -1,3 +1,4 @@
+const { css } = require('js-beautify');
 const database = require('../models');
 
 class PessoaController{
@@ -16,7 +17,7 @@ class PessoaController{
         console.log(id)
         try{            
             const UmaPessoas = await database.Pessoas.findByPk({
-                whrere:{
+                where:{
                     id: Number(id) 
                 }
             });            
@@ -61,6 +62,18 @@ class PessoaController{
         }catch(error){
             res.status(500).json(error.message)
 
+        }
+    }
+    static async apagaPessoa(req, res){
+        const id = req.params.id
+        try{
+            await database.Pessoas.destroy({where:{id: id}})
+            console.log('estou aqui')
+            return res.status(200).json({message: "ok pessoa deletada com sucesso"})
+
+        }catch(error){
+            console.log('deu erro')
+            res.status(500).json(error.message)
         }
     }
 

@@ -3,9 +3,10 @@ const PessoaController = require('../controllers/PessoaController')
 
 
 
-const app = Router()
-app.get('/pessoas', PessoaController.pegaTodasAsPessoas)
-app.get('/pessoas/:id', PessoaController.pegaUmaPessoas)
+const router = Router()
+router.get('/pessoas', PessoaController.pegaTodasAsPessoas)
+router.get('/pessoas/:id', PessoaController.pegaUmaPessoas)
+router.post('/pessoas', PessoaController.criaPessoa)
 
 
-module.exports = app
+module.exports = router

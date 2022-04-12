@@ -10,6 +10,7 @@ class PessoaController{
             return res.status(500).json(error.message)
         }
     } 
+    //________________________________________________________________
     static async pegaUmaPessoas(req, res){
         const id = req.params.id
         console.log(id)
@@ -25,6 +26,7 @@ class PessoaController{
             return res.status(500).json(error.message)
         }
     } 
+    //________________________________________________________________
     static async pegaUmaPessoa(req, res){
         const id = req.params.id
         console.log(id)
@@ -44,6 +46,21 @@ class PessoaController{
 
         }catch(error){
             return res.status(500).json(error.message)
+        }
+    }
+    static async atualizaPessoa(req, res){
+        const id = req.params.id;
+        const novasInfos = req.body
+
+        try{
+            await database.Pessoas.update(novasInfos, {where: {id: id}})
+            const dadosDaPessoa = await database.Pessoas.findByPk(id)
+             
+            res.status(200).json(dadosDaPessoa)
+
+        }catch(error){
+            res.status(500).json(error.message)
+
         }
     }
 

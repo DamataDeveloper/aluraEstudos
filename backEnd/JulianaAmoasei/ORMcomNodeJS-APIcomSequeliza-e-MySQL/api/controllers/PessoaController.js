@@ -77,5 +77,37 @@ class PessoaController{
         }
     }
 
+    static async pegaUmaMatricula(req, res){
+        const {estudanteId, matriculaId} = req.params
+        try{            
+            const UmaMatricula = await database.Matriculas.findOne({
+                where:{
+                    id: matriculaId,
+                    estudante_id: estudanteId 
+                }
+            });    
+            console.log(`pega uma matricula`)        
+            return res.status(201).json(UmaMatricula)
+
+        }catch(error){
+            console.log(`nao foi possivel retornar uma matricula`)
+            return res.status(500).json(error.message)
+        }
+    } 
+
+    static async criaMatriculas(req, res){
+        const {estudanteId} = req.params
+        const novaMatricula = { ...req.body, estudante_id: estudanteId};
+        try{
+            const novaMatriculaCriada = await database.Matriculas.create(novaMatricula)
+            console.log('Criando uma matricula')
+            return res.status(200).json(novaMatriculaCriada)
+
+        }catch(error){
+            console.log('erro nao conseguimos criar sua matricula')
+            return res.status(500).json(error.message)
+        }
+    }
+
 }
 module.exports = PessoaController

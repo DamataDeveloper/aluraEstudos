@@ -109,5 +109,49 @@ class PessoaController{
         }
     }
 
+    static async atualizaMatricula(req, res){
+        const {estudanteId, matriculaId} = req.params
+        const novasInfos = req.body
+
+        try{
+            await database.Matriculas.update(novasInfos, {
+                where: {
+                    id: matriculaId,
+                    estudante_id: estudanteId
+                }               
+            })
+            const matriculaAtualiza = await database.Matriculas.findOne({
+                where:{
+                    id: matriculaId
+                }
+            })            
+            res.status(200).json(matriculaAtualiza)
+
+        }catch(error){
+            res.status(500).json(error.message)
+
+        }
+    }
+
+    static async deletarMatricula(req, res){
+        const {estudanteId, matriculaId} = req.params
+        const novasInfos = req.body
+
+        try{
+            await database.Matriculas.destroy(novasInfos, {
+                where: {
+                    id: matriculaId,
+                   
+                }               
+            })
+                   
+            res.status(200).json({messagem: `id ${matriculaId} foi deletado`})
+
+        }catch(error){
+            res.status(500).json(error.message)
+
+        }
+    }
+
 }
 module.exports = PessoaController

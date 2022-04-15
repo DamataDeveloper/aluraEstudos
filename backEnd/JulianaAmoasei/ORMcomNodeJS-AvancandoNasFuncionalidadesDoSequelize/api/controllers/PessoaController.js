@@ -1,10 +1,10 @@
 const database = require('../models')
 
 class PessoaController {
-  static async pegaTodasAsPessoas(req, res){
+  static async pegaPessoasAtivas(req, res){
     try {
-      const todasAsPessoas = await database.Pessoas.findAll()
-      return res.status(200).json(todasAsPessoas)  
+      const pessoasAtivas = await database.Pessoas.findAll()
+      return res.status(200).json(pessoasAtivas)  
     } catch (error) {
       return res.status(500).json(error.message)
     }
@@ -121,6 +121,17 @@ class PessoaController {
       return res.status(200).json({ mensagem: `id ${matriculaId} deletado` })
 
     } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
+  static async pegaTodasAsPessoas(req, res){
+    try {
+      const todasAsPessoas = await database.Pessoas.scope('todos').findAll()
+      console.log('estou no scope')
+      return res.status(200).json(todasAsPessoas)  
+    } catch (error) {
+      console.log('estou no scope nao deu certo')
       return res.status(500).json(error.message)
     }
   }

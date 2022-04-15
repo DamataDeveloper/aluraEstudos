@@ -9,8 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   {
     paranoid: true,
     defaultScope:{
-      where: {ativo: true}
-    }
+      where: {ativo: true},
+    },
+    scopes:{
+      todos:{ where: {} },      
+    }    
   })
   Pessoas.associate = function(models) {
     Pessoas.hasMany(models.Turmas, {

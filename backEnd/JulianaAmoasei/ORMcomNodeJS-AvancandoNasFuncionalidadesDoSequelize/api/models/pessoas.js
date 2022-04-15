@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   })
   Pessoas.associate = function(models) {
     Pessoas.hasMany(models.Turmas, {
-      foreignKey: 'docente_id'
+      foreignKey: 'docent_id'
     }) 
     Pessoas.hasMany(models.Matriculas, {
       foreignKey: 'estudante_id',

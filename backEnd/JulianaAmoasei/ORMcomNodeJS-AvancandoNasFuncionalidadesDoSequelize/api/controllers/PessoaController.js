@@ -1,5 +1,6 @@
 const database = require('../models')
 
+
 class PessoaController {
   static async pegaPessoasAtivas(req, res){
     try {

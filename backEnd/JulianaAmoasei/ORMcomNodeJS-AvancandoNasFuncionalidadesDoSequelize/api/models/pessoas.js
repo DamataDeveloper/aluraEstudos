@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Pessoas = sequelize.define('Pessoas', {
     nome: {
-      tupe: DataTypes.STRING,
+      type: DataTypes.STRING,
       validate:{
         funcaoValidadora: function(dado){
           if(dado.length < 3) throw Error('o campo nome deve ter mais de 3 caracteres')
@@ -35,7 +35,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'docente_id'
     }) 
     Pessoas.hasMany(models.Matriculas, {
-      foreignKey: 'estudante_id'
+      foreignKey: 'estudante_id',
+      scope:{ status: 'ativo' },
+      as: 'aulasMatriculadas'
     })
 
   }

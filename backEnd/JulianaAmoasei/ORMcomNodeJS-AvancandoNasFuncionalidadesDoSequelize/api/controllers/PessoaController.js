@@ -8,7 +8,7 @@ class PessoaController {
   static async pegaPessoasAtivas(req, res){
     try {
       //const pessoasAtivas = await database.Pessoas.findAll()
-      const pessoasAtivas = pessoasServices.pegaTodosOsRegistros() 
+      const pessoasAtivas = await pessoasServices.pegaTodosOsRegistros() 
       return res.status(200).json(pessoasAtivas)  
     } catch (error) {
       return res.status(500).json(error.message)

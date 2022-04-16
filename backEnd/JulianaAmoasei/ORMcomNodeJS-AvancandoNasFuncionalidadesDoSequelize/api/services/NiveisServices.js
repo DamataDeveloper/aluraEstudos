@@ -7,4 +7,4 @@ class NiveisService extends Services{
     //metodos expecificos do controlador Niveis
 
 }
-modeule.exports = NiveisService
+module.exports = NiveisService

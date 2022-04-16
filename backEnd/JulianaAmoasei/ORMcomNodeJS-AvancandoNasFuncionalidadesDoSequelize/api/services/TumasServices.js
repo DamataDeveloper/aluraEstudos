@@ -7,4 +7,4 @@ class TurmasService extends Services{
     //metodos expecificos do controlador turmas
 
 }
-modeule.exports = TurmasService
+module.exports = TurmasService

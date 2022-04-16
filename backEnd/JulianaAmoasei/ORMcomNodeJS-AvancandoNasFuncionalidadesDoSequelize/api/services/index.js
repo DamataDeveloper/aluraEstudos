@@ -1,11 +1,13 @@
 const PessoasServices = require('./PessoasServices')
 const NiveisServices = require('./NiveisServices')
-const TurmasServices = require('./TurmasServices')
-const ServicesServices = require('./ServicesServices')
+const TurmasServices = require('./TumasServices')
+const MatriculaServices = require('./MatriculasServices')
+
 
 
 module.exports = {
     PessoasServices: PessoasServices,
     NiveisServices: NiveisServices,
-    TurmasServices: TurmasServices    
+    TurmasServices: TurmasServices,
+    MatriculaServices: MatriculaServices    
 }

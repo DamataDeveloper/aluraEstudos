@@ -1,10 +1,14 @@
-const database = require('../models')
+//const database = require('../models')
+//const Sequelize = require('sequelize')
+const Services = require('../services/Services')
+const pessoasServices = new Services('Pessoas')
 
 
 class PessoaController {
   static async pegaPessoasAtivas(req, res){
     try {
-      const pessoasAtivas = await database.Pessoas.findAll()
+      //const pessoasAtivas = await database.Pessoas.findAll()
+      const pessoasAtivas = pessoasServices.pegaTodosOsRegistros() 
       return res.status(200).json(pessoasAtivas)  
     } catch (error) {
       return res.status(500).json(error.message)
@@ -91,10 +95,14 @@ class PessoaController {
   static async criaMatricula(req, res) {
     const { estudanteId } = req.params
     const novaMatricula = { ...req.body, estudante_id: Number(estudanteId) }
+    console.log(novaMatricula)
     try {
+      //const novaPessoaCriada = await database.Pessoas.create(novaPessoa)
       const novaMatriculaCriada = await database.Matriculas.create(novaMatricula)
+      console.log('criando matricula')
       return res.status(200).json(novaMatriculaCriada)
     } catch (error) {
+      console.log('criando matricula sem sucesso')
       return res.status(500).json(error.message)
     }
   }
@@ -160,6 +168,24 @@ class PessoaController {
     }
   }
 */
+
+static async pegaMatriculaPorTurma(req, res) {
+  const { turmaId } = req.params
+  try {
+    const todasAsMatriculas = database.Matriculas.findAndCountAll({
+      where:{
+        turma_id: Number(turmaId),
+        status: 'ativo'
+      },
+      limit: 20,
+      order: [['estudante_id', 'ASD']] 
+    })                     
+    return res.status(200).json(todasAsMatriculas)
+
+  } catch (error) {
+    return res.status(500).json(error.message)
+  }
+}
 }
 
 module.exports = PessoaController

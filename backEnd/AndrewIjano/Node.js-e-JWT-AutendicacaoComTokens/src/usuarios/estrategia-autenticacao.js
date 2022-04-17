@@ -5,18 +5,27 @@ const Usuario = require('./usuarios-modelo');
 const {InvalidArgumentError} = require('../erros');
 const bcrypt = require('bcrypt');
 
+
+
+
+
 function verificaUsuario(usuario){
     if(!usuario){
         throw new InvalidArgumentError('Nao existe usuario com esse e-mail')
     }
 }
-
 async function verificaSenha(senha, senhaHash){
     const senhaValida = await bcrypt.compare(senha, senhaHash)
-    if(!senha){
+    if(!senhaValida){
         throw new InvalidArgumentError('E-mail ou Senha invalidos')
     }
 }
+
+
+
+
+
+
 passport.use(
     new LocalStrategy({
         usernameField: 'email',
@@ -26,7 +35,7 @@ passport.use(
         try{
             const usuario = await Usuario.buscaPorEmail(email);
             verificaUsuario(usuario);
-            verificaSenha(senha, usuario.senhaHash);
+            await verificaSenha(senha, usuario.senhaHash);
 
             done(null, usuario);
 
@@ -36,3 +45,5 @@ passport.use(
         }
     })
 )
+
+module.exports = passport

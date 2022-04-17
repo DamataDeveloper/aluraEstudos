@@ -64,6 +64,7 @@ class Usuario {
 
   static gerarSenhaHash(senha){
     const custoHash = 12;
+    
     return bcrypt.hash(senha, custoHash)
   
   }

@@ -12,6 +12,8 @@ module.exports = {
       });
 
       await usuario.adicionaSenha(senha)
+      console.log(senha)
+      
 
       await usuario.adiciona();
 

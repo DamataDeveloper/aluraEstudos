@@ -9,7 +9,7 @@ function criaTokenJWT(usuario){
     id: usuario.id
   };
 
-  const token = jwt.sign(payload, 'senha-secreta');
+  const token = jwt.sign(payload, process.env.CHAVE_JWT);
   return token
 
 }
@@ -45,12 +45,9 @@ module.exports = {
   },
 
   login: (req, res) =>{
-    console.log(req.body)
-    console.log('-----------------------------------------------------------------')
-    console.log(req.user)
+    
     const token = criaTokenJWT(req.user);
-    console.log('-----------------------------------------------------------------')
-    console.log(token)
+   
     res.set('Authorization', token)
     res.status(204).send();
   },

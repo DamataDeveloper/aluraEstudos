@@ -1,5 +1,20 @@
 const Usuario = require('./usuarios-modelo');
 const { InvalidArgumentError, InternalServerError } = require('../erros');
+const jwt = require('jsonwebtoken');
+
+
+// criancao do tokenJWT
+function criaTokenJWT(usuario){
+  const payload = {
+    id: usuario.id
+  };
+
+  const token = jwt.sign(payload, 'senha-secreta');
+  return token
+
+}
+
+
 
 module.exports = {
   adiciona: async (req, res) => {
@@ -30,7 +45,14 @@ module.exports = {
   },
 
   login: (req, res) =>{
-    res.status(204).send()
+    console.log(req.body)
+    console.log('-----------------------------------------------------------------')
+    console.log(req.user)
+    const token = criaTokenJWT(req.user);
+    console.log('-----------------------------------------------------------------')
+    console.log(token)
+    res.set('Authorization', token)
+    res.status(204).send();
   },
 
   lista: async (req, res) => {

@@ -44,6 +44,6 @@ passport.use(
             done(erro)
         }
     })
-)
+);
 
-module.exports = passport
+//module.exports = passport

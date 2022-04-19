@@ -1,6 +1,8 @@
 const passport = require('passport');
 const { InvalidArgumentError } = require('../erros');
 
+
+
 module.exports ={
     local: (req, res, next)=>{
         passport.authenticate(
@@ -33,7 +35,7 @@ module.exports ={
                     return res.status(401).json({erro: erro.message});
                 }
                 if(erro && erro.name === 'TokenExpiredError'){
-                    console.log("tempo expirado")
+                    
                     return res.status(401).json({erro: erro.message, expiradoEm: erro.expiredAt});
                 }
                 if(erro){
@@ -43,6 +45,7 @@ module.exports ={
                     return res.status(401).json();
                 }
                 
+                //req.token = info.token
                 req.user = usuario;
                 return next();
             }

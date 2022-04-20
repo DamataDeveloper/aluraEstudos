@@ -8,4 +8,4 @@ require('./redis/blocklist');
 const routes = require('./rotas');
 routes(app);
 
-app.listen(port);
+app.listen(port, console.log(`rodando na porta ${port}`));

@@ -1,3 +1,4 @@
+/*
 const blocklist = require('./blocklist');
 
 const { promisify } = require('util');
@@ -24,3 +25,4 @@ module.exports = {
     return resultado === 1;
   },
 };
+*/

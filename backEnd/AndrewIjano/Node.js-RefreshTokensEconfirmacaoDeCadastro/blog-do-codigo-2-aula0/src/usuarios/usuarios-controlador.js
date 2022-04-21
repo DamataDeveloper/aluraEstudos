@@ -32,6 +32,8 @@ module.exports = {
   async adiciona(req, res) {
     console.log(req.body)
     const { nome, email, senha } = req.body;
+
+    
     
 
     try {
@@ -42,7 +44,8 @@ module.exports = {
       await usuario.adicionaSenha(senha);
       await usuario.adiciona();
 
-      await emails.enviaEmail(usuario)
+      await emails.enviaEmail(usuario).catch(console.log)
+      
       res.status(201).json(req.body);
     } catch (erro) {
       if (erro instanceof InvalidArgumentError) {

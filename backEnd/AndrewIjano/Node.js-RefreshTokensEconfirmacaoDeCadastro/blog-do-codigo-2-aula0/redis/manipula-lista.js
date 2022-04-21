@@ -1,3 +1,5 @@
+
+/*
 const {promisify} = require('util');
 
 
@@ -28,3 +30,4 @@ module.exports = lista =>{
     }
 
 }
+*/

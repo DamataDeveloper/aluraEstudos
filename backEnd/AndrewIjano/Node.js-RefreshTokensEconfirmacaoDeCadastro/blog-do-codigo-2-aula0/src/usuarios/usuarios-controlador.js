@@ -8,6 +8,9 @@ const allowlistRefreshToken = require('../../redis/allowlist-refresh-token')
 const crypto = require('crypto');
 const moment = require('moment');
 
+
+const emails = require('./email');
+
 function criaTokenJWT(usuario) {
   const payload = {
     id: usuario.id,
@@ -20,7 +23,7 @@ function criaTokenJWT(usuario) {
 function criaTokenOpaco(usuario){
   const tokenOpaco = crypto.randomBytes(24).toString('hex');
   const dataExpiracao = moment().add(5, 'd').unix();
-  await allowlistRefreshToken.adiciona(tokenOpaco, usuario.id, dataExpiracao);
+  //await allowlistRefreshToken.adiciona(tokenOpaco, usuario.id, dataExpiracao);
 
   return tokenOpaco
 }
@@ -39,6 +42,7 @@ module.exports = {
       await usuario.adicionaSenha(senha);
       await usuario.adiciona();
 
+      await emails.enviaEmail(usuario)
       res.status(201).json(req.body);
     } catch (erro) {
       if (erro instanceof InvalidArgumentError) {

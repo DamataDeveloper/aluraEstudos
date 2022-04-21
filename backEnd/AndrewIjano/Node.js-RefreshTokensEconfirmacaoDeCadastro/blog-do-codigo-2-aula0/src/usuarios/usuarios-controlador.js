@@ -1,40 +1,17 @@
 const Usuario = require('./usuarios-modelo');
 const { InvalidArgumentError } = require('../erros');
 
-const jwt = require('jsonwebtoken');
-const blocklist = require('../../redis/manipula-blocklist');
-const allowlistRefreshToken = require('../../redis/allowlist-refresh-token')
+const tokens = require('./tokens');
+const { EmailVerificacao } = require('./emails');
 
-const crypto = require('crypto');
-const moment = require('moment');
-
-
-const emails = require('./email');
-
-function criaTokenJWT(usuario) {
-  const payload = {
-    id: usuario.id,
-  };
-
-  const token = jwt.sign(payload, process.env.CHAVE_JWT, { expiresIn: '15m' });
-  return token;
-}
-
-function criaTokenOpaco(usuario){
-  const tokenOpaco = crypto.randomBytes(24).toString('hex');
-  const dataExpiracao = moment().add(5, 'd').unix();
-  //await allowlistRefreshToken.adiciona(tokenOpaco, usuario.id, dataExpiracao);
-
-  return tokenOpaco
+function geraEndereco(rota, id) {
+  const baseURL = process.env.BASE_URL;
+  return `${baseURL}${rota}${id}`;
 }
 
 module.exports = {
   async adiciona(req, res) {
-    console.log(req.body)
     const { nome, email, senha } = req.body;
-
-    
-    
 
     try {
       const usuario = new Usuario({
@@ -44,25 +21,25 @@ module.exports = {
       await usuario.adicionaSenha(senha);
       await usuario.adiciona();
 
-      await emails.enviaEmail(usuario).catch(console.log)
-      
-      res.status(201).json(req.body);
+      const endereco = geraEndereco('/usuario/verifica_email/', usuario.id);
+      const emailVerificacao = new EmailVerificacao(usuario, endereco);
+      emailVerificacao.enviaEmail().catch(console.log);
+
+      res.status(201).json();
     } catch (erro) {
       if (erro instanceof InvalidArgumentError) {
-        
         return res.status(400).json({ erro: erro.message });
       }
-      
       res.status(500).json({ erro: erro.message });
     }
   },
 
   async login(req, res) {
     try {
-      const accessToken = criaTokenJWT(req.user);
-      const refreshToken = await criaTokenOpaco(req.user);
+      const accessToken = tokens.access.cria(req.user.id);
+      const refreshToken = await tokens.refresh.cria(req.user.id);
       res.set('Authorization', accessToken);
-      res.status(200).json({refreshToken});
+      res.status(200).json({ refreshToken });
     } catch (erro) {
       res.status(500).json({ erro: erro.message });
     }
@@ -71,7 +48,7 @@ module.exports = {
   async logout(req, res) {
     try {
       const token = req.token;
-      await blocklist.adiciona(token);
+      await tokens.access.invalida(token);
       res.status(204).json();
     } catch (erro) {
       res.status(500).json({ erro: erro.message });
@@ -81,7 +58,6 @@ module.exports = {
   async lista(req, res) {
     try {
       const usuarios = await Usuario.lista();
-      console.log('listando usuarios')
       res.json(usuarios);
     } catch (erro) {
       res.status(500).json({ erro: erro.message });
